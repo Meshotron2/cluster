@@ -19,6 +19,19 @@
     - Gigabit Ethernet over USB 2.0 (maximum throughput 300 Mbps)
     - 40-pin GPIO header
     - Up to 2x Uart
+- Raspberry Pi 3 Model B
+    - Quad Core 1.2GHz Broadcom BCM2837 64bit CPU
+    - 1GB RAM
+    - BCM43438 wireless LAN and Bluetooth Low Energy (BLE) on board
+    - 100 Base Ethernet
+    - 40-pin extended GPIO
+    - 4 USB 2 ports
+    - 4 Pole stereo output and composite video port
+    - Full size HDMI
+    - CSI camera port for connecting a Raspberry Pi camera
+    - DSI display port for connecting a Raspberry Pi touchscreen display
+    - Micro SD port for loading your operating system and storing data
+    - Upgraded switched Micro USB power source up to 2.5A
 - Raspberry Pi 1 Model B+
     - 700 MHz ARM11 processor
     - 512 MB of RAM
@@ -33,12 +46,26 @@
     - 2 × UART, 2 × SPI controllers, 2 × I2C controllers, 16 × PWM channels
     - 1 × USB 1.1 controller and PHY, with host and device support
     - 8 × Programmable I/O (PIO) state machines for custom peripheral 
+    - Drag-and-drop programming using mass storage over USB
+    - Low-power sleep and dormant modes
+    - Accurate on-chip clock
+    - Temperature sensor
+    - Accelerated integer and floating-point libraries on-chip
 - Raspberry Pi Zero 2 W
     - 1GHz quad-core 64-bit Arm Cortex-A53 CPU
     - 512MB SDRAM
     - 2.4GHz 802.11 b/g/n wireless LAN
     - HAT-compatible 40-pin header footprint (unpopulated)
     - Can't find UART/I2C info on this model. Only stuff from the RPi Zero W appears
+- Raspberry Pi Zero
+    - 1GHz single-core CPU
+    - 512MB RAM
+    - Mini HDMI port
+    - Micro USB OTG port
+    - Micro USB power
+    - HAT-compatible 40-pin header
+    - Composite video and reset headers
+    - CSI camera connector (v1.3 only)
 
 ## Cluster Nodes Communication Methods
 #### SPIO
@@ -67,3 +94,4 @@
 
 Rasbpberry Pi specs from [here](https://www.raspberrypi.org/)
 Usefull [link](https://pinout.xyz/#)
+A very good link for Raspberry Pi: (https://www.raspberrypi.com/documentation/computers/raspberry-pi.html)
