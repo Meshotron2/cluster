@@ -94,4 +94,5 @@
 
 Rasbpberry Pi specs from [here](https://www.raspberrypi.org/)
 Usefull [link](https://pinout.xyz/#)
+
 A very good link for Raspberry Pi: (https://www.raspberrypi.com/documentation/computers/raspberry-pi.html)
