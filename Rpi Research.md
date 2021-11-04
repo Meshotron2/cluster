@@ -97,5 +97,6 @@ Usefull [link](https://pinout.xyz/#)
 
 A very good link for Raspberry Pi: (https://www.raspberrypi.com/documentation/computers/raspberry-pi.html)
 
-## Link with ALL specs for some Arduinos
+## Some good links with specs for a few Arduinos
 https://www.seeedstudio.com/blog/2019/11/07/arduino-communication-peripherals-uart-i2c-and-spi/
+https://www.arduino.cc/reference/pt/language/functions/communication/serial/
