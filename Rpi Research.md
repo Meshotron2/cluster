@@ -74,7 +74,7 @@
 - Viable on the 4 b since it has up to 6 UARTS
 - Helpfull info [here](https://forums.raspberrypi.com/viewtopic.php?t=244827) and [here](https://forums.raspberrypi.com/viewtopic.php?t=105995)
 #### SPI
-- Typocaly is more faster than I2C. Look description [here](https://core-electronics.com.au/tutorials/i-spi-with-raspberry-pi.html)
+- Typocaly is more faster than I2C. Look the description [here](https://core-electronics.com.au/tutorials/i-spi-with-raspberry-pi.html)
 #### I2C
 - Apparently the RPi 4 can act as an I2C [slave](https://forums.raspberrypi.com/viewtopic.php?t=265832) so seems also possible. Although not sure how many slave pins there are...
 #### USB
