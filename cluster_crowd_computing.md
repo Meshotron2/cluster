@@ -87,9 +87,20 @@
     - 10/100 ethernet, 802.11 b/g/n, Bluetooth 4.0
     - 2 x USB
     - 2 x UART, SPI, I2C
+    - preço ronda os 60$
     (more info: https://www.mips.com/platform/mips-creator-ci20/)
 
-    
+## Orange Pi 4 
+    - Rockchip RK3399, 6-core ARM® 64-bit processor ,main frequency speeds up to 2.0GHz
+    - Dual 4GB LPDDR4 + 16GB EMMC Flash
+    - 10/100/1000Mbps Ethernet( Realtek RTL8211E ) 
+    - 1 x HDMI 2.0 ( Type-A )
+    - 2 x USB2.0 HOST，1x USB3.0 HOST, 1 x USB3.0 Type-C
+    - GPIO1 40 pins（1 x I2S、2 x I2C、1 x SPI/UART、8 x GPIO） / GPIO2 24pin PCIE port 
+    - OS Support : Android 8.1, Ubuntu 16.04, Ubuntu 18.04, Debian 9 
+    - preço : ~100 € 
+    (more info: http://www.orangepi.org/Orange%20Pi%204/)
+
 ## Arduino Pro Mini
 (https://www.arduino.cc/en/pmwiki.php?n=Main/ArduinoBoardProMini)
 	-preço arredonda os 10 euros.
