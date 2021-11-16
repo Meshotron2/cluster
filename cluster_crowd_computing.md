@@ -90,6 +90,18 @@
     (more info: https://www.mips.com/platform/mips-creator-ci20/)
 
     
+## Arduino Pro Mini
+(https://www.arduino.cc/en/pmwiki.php?n=Main/ArduinoBoardProMini)
+	-preço arredonda os 10 euros.
+	-Uart 1
+	-SPI 1
+	-I2C 1
+	-Analog Input Pins 	6
+	-External Interrupts 	2
+	-Flash Memory 	32KB of which 2 KB used by bootloader * SRAM 	2 KB *
+	-EEPROM 	1 KB *
+	-Clock Speed 	8 MHz (3.3V versions) or 16 MHz (5V versions)
+	-Microcontroller ATmega328 *
 	
 
 
