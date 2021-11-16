@@ -80,6 +80,16 @@
 	- 40 Pin Header : GPIO (x28) and Power (+5V, +3.3V and GND). GPIO pins can be used for UART, I2C, SPI or PWM (2 uarts)!
 	-5 volt @3A via Micro USB (TYPE C)
 	- Android and Linux 
+
+## MIPS Creator CI20
+    - Ingenic JZ4780, dual-core2GHz MIPS32 processor, 32k I&D L1 cache, 512k L2 cache
+    - 4GB Flash, 1GB DDR3 memoryº
+    - 10/100 ethernet, 802.11 b/g/n, Bluetooth 4.0
+    - 2 x USB
+    - 2 x UART, SPI, I2C
+    (more info: https://www.mips.com/platform/mips-creator-ci20/)
+
+    
 	
 
 
