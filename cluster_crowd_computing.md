@@ -66,6 +66,22 @@
     - HAT-compatible 40-pin header
     - Composite video and reset headers
     - CSI camera connector (v1.3 only)
+    
+## Banana pi BPI-M5
+	- aproximadamente 70.99 euros (pouca disponibildade)
+	-Amlogic S905X3 Quad-Core Cortex-A55 (2.0xxGHz) 
+	-Mali-G31 MP2 GPU with 4 x Execution Engines (650Mhz) 
+	-4 GB LPDDR4 
+	- MicroSD slot 
+	-10/100/1000 Mbit/s Ethernet ,Optional WiFi USB dongle 
+	- 1 x HDMI 2.0 (up to 4K@60Hz with HDR, CEC, EDID) 
+	- 3.5mm jack and 1 x HDMI digital output 
+	- USB 3.0 PORT (x4) 
+	- 40 Pin Header : GPIO (x28) and Power (+5V, +3.3V and GND). GPIO pins can be used for UART, I2C, SPI or PWM (2 uarts)!
+	-5 volt @3A via Micro USB (TYPE C)
+	- Android and Linux 
+	
+
 
 ## Cluster Nodes Communication Methods
 #### SPIO
