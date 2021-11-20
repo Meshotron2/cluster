@@ -1,6 +1,9 @@
-#include<stdio.h>
+﻿#include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
+#include<string.h>
+#include"app.h"
+#include"types.h"
 
 int main(void)
 {
@@ -9,10 +12,10 @@ int main(void)
 	 * 	- width, depth, height (int)
 	 * 	- update freq (48000Hz, 44100Hz, 22050Hz, 16000Hz, 11025Hz, 8000Hz)
 	 */
-	
+
 	int w, h, d;
 	int f = -1;
-	int c = 343;
+	const int c = 343;
 
 	printf("width: ");
 	scanf("%d", &w);
@@ -21,12 +24,12 @@ int main(void)
 	printf("height: ");
 	scanf("%d", &h);
 	printf("\n");
-	
+
 	printf("depth: ");
 	scanf("%d", &d);
 	printf("\n");
 
-	
+
 	while (f >= 6 || f < 0)
 	{
 		printf("Possible frequency values:\n");
@@ -40,35 +43,44 @@ int main(void)
 		scanf("%d", &f);
 		printf("\n");
 	}
-	int freqs[] = {48000, 44100, 22050, 16000, 11025, 8000}
+	const int freqs[] = { 48000, 44100, 22050, 16000, 11025, 8000 };
 
 	f = freqs[f - 1];
 
-	int x = getNodes(f, w, c);
-	int y = getNodes(f, d, c);
-	int z = getNodes(f, h, c);
+	Header header = { getNodes(f, w, c),  getNodes(f, d, c), getNodes(f, h, c), f};
+
+	//inform user if the room size slightly changed
+	//to-do
+
+	Node*** nodeMatrix = alloc_nodes(&header);
+	if (!nodeMatrix) return EXIT_FAILURE;
 
 	/*
 	 * Customize room
 	 */
 
-	customizeRoom();
+	customizeRoom(&header, nodeMatrix);
+
+	write_dwm_file("room.dwm", &header, nodeMatrix);
+	
+	//clean-up
+	free_nodes(&header, nodeMatrix);
 }
 
 int getNodes(int f, int dim, int c)
 {
-	return (f*dim)/(c*sqrt(3));
+	return (f * dim) / (c * sqrt(3));
 }
 
-void customizeRoom()
+void customizeRoom(const Header* header, Node*** nodes)
 {
 	char choice = 0;
 
 	while (
-		choice != 'S' && 
-		choice != 'C' && 
-		choice != 's' && 
-		choice != 'r' && 
+		choice != 'S' &&
+		choice != 'C' &&
+		choice != 's' &&
+		choice != 'r' &&
 		choice != 'q'
 		)
 	{
@@ -77,7 +89,7 @@ void customizeRoom()
 		printf("Source: 's'\n");
 		printf("Receiver: 'r'\n");
 		printf("QUIT: 'q'\n");
-		printf("Select one... ")
+		printf("Select one... ");
 
 		scanf("%c", &choice);
 		printf("\n");
@@ -85,28 +97,29 @@ void customizeRoom()
 
 	switch (choice)
 	{
-		case 'q':
-			return;
-		case 'S':
-			buildSphere();
-			break;
-		case 'C':
-			buildCuboid();
-			break;
-		case 's':
-			//TODO: only one source allowed, check for this
-			//		maybe store the source's last state and reset it whenever a new source is set. 
-			setSource();
-			break;
-		case 'r':
-			setReceiver();
-			break;
+	case C_QUIT:
+		return;
+	case C_SPHERE:
+		buildSphere(header, nodes);
+		break;
+	case C_CUBOID:
+		buildCuboid(header, nodes);
+		break;
+	case C_SRC:
+		//TODO: only one source allowed, check for this
+		//		maybe store the source's last state and reset it whenever a new source is set. 
+		setSource(nodes);
+		break;
+	case C_RCVR:
+		setReceiver(nodes);
+		break;
 	}
 }
 
-void setReceiver()
+void setReceiver(Node*** nodes)
 {
 	int x, y, z;
+	Node n = { RCVR_NODE };
 
 	printf("receiver x: ");
 	scanf("%d", &x);
@@ -115,17 +128,19 @@ void setReceiver()
 	printf("receiver y: ");
 	scanf("%d", &y);
 	printf("\n");
-	
+
 	printf("receiver z: ");
 	scanf("%d", &z);
 	printf("\n");
 
 	// set receiver
+	nodes[x][y][z] = n;
 }
 
-void setSource()
+void setSource(Node*** nodes)
 {
 	int x, y, z;
+	Node n = { SRC_NODE };
 
 	printf("source x: ");
 	scanf("%d", &x);
@@ -134,17 +149,19 @@ void setSource()
 	printf("source y: ");
 	scanf("%d", &y);
 	printf("\n");
-	
+
 	printf("source z: ");
 	scanf("%d", &z);
 	printf("\n");
 
 	// set source
+	nodes[x][y][z] = n;
 }
 
-void buildSphere()
+void buildSphere(const Header* header, Node*** nodes)
 {
-	int x, y, z, r;
+	int x, y, z;
+	double r;
 
 	printf("centre x: ");
 	scanf("%d", &x);
@@ -153,23 +170,45 @@ void buildSphere()
 	printf("centre y: ");
 	scanf("%d", &y);
 	printf("\n");
-	
+
 	printf("centre z: ");
 	scanf("%d", &z);
 	printf("\n");
 
 	printf("radious: ");
-	scanf("%d", &r);
+	scanf("%lf", &r);
 	printf("\n");
 
-	char c = showOpts();
-	
+	Node n = { showOpts() };
+
 	// taking the radious, center a cube arround the centre
 	// run through each point and aply to those whose distance is <= than the redious
-	// populate with c
+	// populate with n
+	for (int x2 = 0; x2 <= header->x; x2++)
+	{
+		for (int y2 = 0; y2 <= header->y; y2++)
+		{
+			for (int z2 = 0; z2 <= header->z; z2++)
+			{
+				if (dist(x, x2, y, y2, z, z2) <= r)
+				{
+					nodes[x2][y2][z2] = n;
+				}
+			}
+		}
+	}
 }
 
-void buildCuboid()
+double dist(int x1, int x2, int y1, int y2, int z1, int z2)
+{
+	int xDist = (x1 - x2) * (x1 - x2);
+	int yDist = (y1 - y2) * (y1 - y2);
+	int zDist = (z1 - z2) * (z1 - z2);
+
+	return sqrt((double)(xDist + yDist + zDist));
+}
+
+void buildCuboid(const Header* header, Node*** nodes)
 {
 	int x1, x2, y1, y2, z1, z2;
 
@@ -181,11 +220,11 @@ void buildCuboid()
 	printf("point 1 y: ");
 	scanf("%d", &y1);
 	printf("\n");
-	
+
 	printf("point 1 z: ");
 	scanf("%d", &z1);
 	printf("\n");
-	
+
 	printf("point 2 x: ");
 	scanf("%d", &x2);
 	printf("\n");
@@ -193,28 +232,38 @@ void buildCuboid()
 	printf("point 2 y: ");
 	scanf("%d", &y2);
 	printf("\n");
-	
+
 	printf("point 2 z: ");
 	scanf("%d", &z2);
 	printf("\n");
 
-	char c = showOpts();
-	
+	Node n = { showOpts() };
+
 	// for from x1 - x2, then y1 - y2, ...
-	// populate with c
+	// populate with n
+	for (int i = x1; i <= x2; i++)
+	{
+		for (int j = y1; j <= y2; j++)
+		{
+			for (int k = z1; k <= z2; k++)
+			{
+				nodes[i][j][k] = n;
+			}
+		}
+	}
 }
 
 char showOpts()
 {
-	char opt = '';
-	
+	char opt = ' ';
+
 	while (
-		opt != ' ' &&
-		opt != 'S' &&
-		opt != 'R' &&
-		opt != 'Z' &&
-		!('A' <= opt && opt <= 'J') &&
-		!('1' <= opt && opt <= '9')
+		opt != STD_NODE &&
+		opt != SRC_NODE &&
+		opt != RCVR_NODE &&
+		opt != RHO_1 &&
+		!(RHO_0 <= opt && opt <= RHO_09) &&
+		!(RHO_091 <= opt && opt <= RHO_099)
 		)
 	{
 		printf("standard: ' '\n");
@@ -239,6 +288,7 @@ char showOpts()
 		printf("p=0.97: 7");
 		printf("p=0.98: 8");
 		printf("p=0.99: 9");
+		printf("p=1: Z");
 
 		printf("Configuration: ");
 		scanf("%c", &opt);
@@ -247,3 +297,86 @@ char showOpts()
 	return opt;
 }
 
+Node*** alloc_nodes(const Header* header)
+{
+	//https://web.archive.org/web/20210601072857/https://www.techiedelight.com/dynamically-allocate-memory-for-3d-array/
+	//main website was down when i tried
+	Node*** nodes = (Node***)malloc(header->x * sizeof(Node**));
+
+	if (nodes == NULL)
+	{
+		fprintf(stderr, "Out of memory");
+		exit(EXIT_FAILURE);
+	}
+
+	for (int i = 0; i < header->x; i++)
+	{
+		nodes[i] = malloc(header->y * sizeof(Node*));
+
+		if (nodes[i] == NULL)
+		{
+			fprintf(stderr, "Out of memory");
+			exit(EXIT_FAILURE);
+		}
+
+		for (int j = 0; j < header->y; j++)
+		{
+			nodes[i][j] = malloc(header->z * sizeof(Node));
+			if (nodes[i][j] == NULL)
+			{
+				fprintf(stderr, "Out of memory");
+				exit(EXIT_FAILURE);
+			}
+		}
+	}
+
+	Node n = { STD_NODE };
+
+	// assign values to the allocated memory
+	for (int i = 0; i < header->x; i++)
+	{
+		for (int j = 0; j < header->y; j++)
+		{
+			for (int k = 0; k < header->z; k++) 
+			{
+				nodes[i][j][k] = n;
+			}
+		}
+	}
+
+	return nodes;
+}
+
+void free_nodes(const Header* header, Node*** nodes)
+{
+	for (int i = 0; i < header->x; i++)
+	{
+		for (int j = 0; j < header->y; j++) {
+			free(nodes[i][j]);
+		}
+		free(nodes[i]);
+	}
+	free(nodes);
+}
+
+void write_dwm_file(const char* filename, const Header* header, const Node*** nodes)
+{
+	FILE* f_ptr = fopen(filename, "r");
+	if (f_ptr)
+	{
+		remove(filename);
+	}
+	f_ptr = fopen(filename, "w");
+	fwrite(header, sizeof(Header), 1, f_ptr);
+	for (int i = 0; i < header->x; i++)
+	{
+		for (int j = 0; j < header->y; j++)
+		{
+			for (int k = 0; k < header->z; k++)
+			{
+				fwrite(&(nodes[i][j][k]), sizeof(Node), 1, f_ptr);
+			}
+		}
+	}
+	fclose(f_ptr);
+}
