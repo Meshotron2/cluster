@@ -2,7 +2,7 @@
 #include "types.h"
 
 int getNodes(int f, int dim, int c);
-void customizeRoom(const Node*** nodes);
+void customizeRoom(const Header* header, Node*** nodes);
 void setReceiver(Node*** nodes);
 void setSource(Node*** nodes);
 void buildSphere(const Header* header, Node*** nodes);
@@ -11,7 +11,7 @@ void buildCuboid(const Header* header, Node*** nodes);
 char showOpts();
 Node*** alloc_nodes(const Header* header);
 void free_nodes(const Header* header, Node*** nodes);
-void write_dwm_file(const char* filename, const Header* header, const Node*** nodes);
+void write_dwm_file(const char* filename, const Header* header, Node*** nodes);
 
 //node types
 #define STD_NODE ' '

@@ -359,7 +359,7 @@ void free_nodes(const Header* header, Node*** nodes)
 	free(nodes);
 }
 
-void write_dwm_file(const char* filename, const Header* header, const Node*** nodes)
+void write_dwm_file(const char* filename, const Header* header, Node*** nodes)
 {
 	FILE* f_ptr = fopen(filename, "r");
 	if (f_ptr)
