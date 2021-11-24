@@ -380,3 +380,42 @@ void write_dwm_file(const char* filename, const Header* header, Node*** nodes)
 	}
 	fclose(f_ptr);
 }
+
+void room_partitioning(const char* filename){
+	//char buf[6];
+	File* f_ptr = fopen(filename, 'r');
+	/*
+	fgets(buf, 6,f_ptr);
+	//get width, depth and height from the file
+	width = ;
+	depth = ;
+	height = ;
+	*/
+	printf("Specify the dimensions of the partitioning: ")
+
+	printf("x_g: ");
+	scanf("%d", &x);
+	printf("\n");
+
+	printf("y_g: ");
+	scanf("%d", &y);
+	printf("\n");
+
+	printf("z_g: ");
+	scanf("%d", &z);
+	printf("\n");
+
+	int N = x_g * y_g * z_g;
+	int x, y, z, i = 0, index;
+	//int x_blocks, y_blocks, z_blocks;
+	int block[];
+
+	for(; i < N; i++){
+		x = i / (y_g * z_g);
+		y = (i % (y_g * z_g)) / z_g;
+		z = (i % (y_g * z_g)) % z_g;
+		index = x * y_g * z_g + y * z_g	+ z;
+		//block[index] = 
+	}
+
+}
