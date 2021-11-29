@@ -11,6 +11,5 @@ MPI is a way to program on distributed memory devices. This means that the paral
 Because our project will have devices with independent memories the best comunication mode to implement is MPI.
 
 
-*MPI vs Other Alternatives*
 
 **WEBGRAFIA**:https://www.iottrends.tech/blog/how-to-cluster-raspberry-pi-4/
