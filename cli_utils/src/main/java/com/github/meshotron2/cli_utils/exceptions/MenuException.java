@@ -10,6 +10,6 @@ public class MenuException extends CLIException{
 
     @Override
     public void display() {
-        System.out.println("ERROR: " + getUserMessage());
+        System.out.println("ERROR: " + getMessage());
     }
 }

@@ -60,7 +60,7 @@ public abstract class Input<T>{
      * @param data The input to be parsed
      * @throws MenuException when the data is malformed, wrong or unexpected.
      */
-    protected abstract T get(String data) throws MenuException, MenuException, MenuException;
+    protected abstract T get(String data) throws MenuException;
 
     public String getPrompt() {
         return prompt;
