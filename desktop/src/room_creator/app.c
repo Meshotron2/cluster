@@ -1,5 +1,7 @@
 ﻿#include"app.h"
 
+int c;
+
 int main(void)
 {
 	/*
@@ -14,18 +16,22 @@ int main(void)
 
 	printf("width: ");
 	scanf("%d", &w);
+	c = getchar();
 	printf("\n");
 
 	printf("height: ");
 	scanf("%d", &h);
+	c = getchar();
 	printf("\n");
 
 	printf("depth: ");
 	scanf("%d", &d);
+	c = getchar();
 	printf("\n");
 
+	printf("%d", w);
 
-	while (f >= 6 || f < 0)
+	while (f > 6 || f < 0)
 	{
 		printf("Possible frequency values:\n");
 		printf("1) 48000\n");
@@ -36,6 +42,7 @@ int main(void)
 		printf("6) 8000\n");
 		printf("frequency: ");
 		scanf("%d", &f);
+	c = getchar();
 		printf("\n");
 	}
 	const int freqs[] = { 48000, 44100, 22050, 16000, 11025, 8000 };
@@ -87,6 +94,7 @@ void customizeRoom(const Header* header, Node*** nodes)
 		printf("Select one... ");
 
 		scanf("%c", &choice);
+	c = getchar();
 		printf("\n");
 	}
 
@@ -118,14 +126,20 @@ void setReceiver(Node*** nodes)
 
 	printf("receiver x: ");
 	scanf("%d", &x);
+	c = getchar();
+	c = getchar();
 	printf("\n");
 
 	printf("receiver y: ");
 	scanf("%d", &y);
+	c = getchar();
+	c = getchar();
 	printf("\n");
 
 	printf("receiver z: ");
 	scanf("%d", &z);
+	c = getchar();
+	c = getchar();
 	printf("\n");
 
 	// set receiver
@@ -139,14 +153,20 @@ void setSource(Node*** nodes)
 
 	printf("source x: ");
 	scanf("%d", &x);
+	c = getchar();
+	c = getchar();
 	printf("\n");
 
 	printf("source y: ");
 	scanf("%d", &y);
+	c = getchar();
+	c = getchar();
 	printf("\n");
 
 	printf("source z: ");
 	scanf("%d", &z);
+	c = getchar();
+	c = getchar();
 	printf("\n");
 
 	// set source
@@ -160,18 +180,23 @@ void buildSphere(const Header* header, Node*** nodes)
 
 	printf("centre x: ");
 	scanf("%d", &x);
+	c = getchar();
+	c = getchar();
 	printf("\n");
 
 	printf("centre y: ");
 	scanf("%d", &y);
+	c = getchar();
 	printf("\n");
 
 	printf("centre z: ");
 	scanf("%d", &z);
+	c = getchar();
 	printf("\n");
 
 	printf("radious: ");
 	scanf("%lf", &r);
+	c = getchar();
 	printf("\n");
 
 	Node n = { showOpts() };
@@ -210,26 +235,32 @@ void buildCuboid(const Header* header, Node*** nodes)
 
 	printf("point 1 x: ");
 	scanf("%d", &x1);
+	c = getchar();
 	printf("\n");
 
 	printf("point 1 y: ");
 	scanf("%d", &y1);
+	c = getchar();
 	printf("\n");
 
 	printf("point 1 z: ");
 	scanf("%d", &z1);
+	c = getchar();
 	printf("\n");
 
 	printf("point 2 x: ");
 	scanf("%d", &x2);
+	c = getchar();
 	printf("\n");
 
 	printf("point 2 y: ");
 	scanf("%d", &y2);
+	c = getchar();
 	printf("\n");
 
 	printf("point 2 z: ");
 	scanf("%d", &z2);
+	c = getchar();
 	printf("\n");
 
 	Node n = { showOpts() };
@@ -287,6 +318,7 @@ char showOpts()
 
 		printf("Configuration: ");
 		scanf("%c", &opt);
+		c = getchar();
 		printf("\n");
 	}
 	return opt;

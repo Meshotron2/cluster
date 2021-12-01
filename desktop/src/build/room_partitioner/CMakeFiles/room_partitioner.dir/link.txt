@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/room_partitioner.dir/room_partitioner.c.o -o room_partitioner 

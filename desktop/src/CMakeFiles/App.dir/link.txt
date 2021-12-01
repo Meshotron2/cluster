@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/App.dir/app.c.o -o App  -lm 

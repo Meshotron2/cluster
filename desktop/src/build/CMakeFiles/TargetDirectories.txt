@@ -1,0 +1,8 @@
+/home/me/Documents/uni/Ano3-Sem1/PECI/código/cluster/desktop/src/build/CMakeFiles/rebuild_cache.dir
+/home/me/Documents/uni/Ano3-Sem1/PECI/código/cluster/desktop/src/build/CMakeFiles/edit_cache.dir
+/home/me/Documents/uni/Ano3-Sem1/PECI/código/cluster/desktop/src/build/room_creator/CMakeFiles/rebuild_cache.dir
+/home/me/Documents/uni/Ano3-Sem1/PECI/código/cluster/desktop/src/build/room_creator/CMakeFiles/edit_cache.dir
+/home/me/Documents/uni/Ano3-Sem1/PECI/código/cluster/desktop/src/build/room_creator/CMakeFiles/App.dir
+/home/me/Documents/uni/Ano3-Sem1/PECI/código/cluster/desktop/src/build/room_partitioner/CMakeFiles/edit_cache.dir
+/home/me/Documents/uni/Ano3-Sem1/PECI/código/cluster/desktop/src/build/room_partitioner/CMakeFiles/rebuild_cache.dir
+/home/me/Documents/uni/Ano3-Sem1/PECI/código/cluster/desktop/src/build/room_partitioner/CMakeFiles/room_partitioner.dir
