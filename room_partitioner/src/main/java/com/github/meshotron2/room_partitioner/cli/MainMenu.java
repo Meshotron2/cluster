@@ -3,14 +3,13 @@ package com.github.meshotron2.room_partitioner.cli;
 import com.github.meshotron2.cli_utils.menu.Menu;
 import com.github.meshotron2.room_partitioner.Main;
 import com.github.meshotron2.room_partitioner.partitioner.Partitioner;
-import com.github.meshotron2.room_partitioner.partitioner.Room;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class MainMenu extends Menu {
 
-    private Partitioner partitioner;
+    private String fileName = null;
 
     public MainMenu(Scanner scanner) {
         super(Arrays.asList("0) Select file", "1) Partition room", "2) Exit"),
@@ -21,11 +20,16 @@ public class MainMenu extends Menu {
     protected void choose(int option) {
         switch (option) {
             case 0:
-                final String fileName = new FileInput(getScanner()).validate();
-                this.partitioner = new Partitioner(fileName);
+                this.fileName = new FileInput(getScanner()).validate();
                 break;
             case 1:
-                final Room room = new PartitionerInputSequence(getScanner()).validate();
+                if (this.fileName == null) {
+                    System.out.println("No room was specified for partitioning");
+                    break;
+                }
+
+                final Partitioner partitioner = new PartitionerInputSequence(getScanner()).validate();
+
                 break;
             case 2:
                 getScanner().close();
