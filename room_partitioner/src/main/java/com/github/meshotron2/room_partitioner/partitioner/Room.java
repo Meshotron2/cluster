@@ -1,8 +1,8 @@
 package com.github.meshotron2.room_partitioner.partitioner;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class Room {
     private final String file;
@@ -13,7 +13,10 @@ public class Room {
 
     private final long f;
 
-    private Room(String file, int x, int y, int z, long f) {
+    private InputStream reader;
+    private OutputStream writer;
+
+    Room(String file, int x, int y, int z, long f) {
         this.file = file;
         this.x = x;
         this.y = y;
@@ -21,8 +24,68 @@ public class Room {
         this.f = f;
     }
 
-    public void readIndices() {
-        
+    public void startRead() throws IOException {
+        if (file == null)
+            throw new IllegalStateException("Room file name cannot be null");
+
+        this.reader = new FileInputStream(file);
+        reader.skip(24); // skip until first char
+    }
+
+    public void endRead() throws IOException {
+        reader.close();
+    }
+
+    public char readNode() throws IOException {
+        final byte[] bs = new byte[2];
+
+        int status = reader.read(bs);
+        if (status != 2) return '\n';
+
+        return (char) (((char) bs[0]) << 8 | ((char) bs[1]));
+    }
+
+    public void startWrite() throws IOException {
+        if (file == null)
+            throw new IllegalStateException("Room file name cannot be null");
+
+        final Path path = Path.of(file);
+        if (Files.exists(path))
+            Files.delete(path);
+
+        Files.createFile(path);
+
+        this.writer = new FileOutputStream(file);
+
+        this.writer.write(x >> 24);
+        this.writer.write(x >> 16);
+        this.writer.write(x >> 8);
+        this.writer.write(x);
+        this.writer.write(y >> 24);
+        this.writer.write(y >> 16);
+        this.writer.write(y >> 8);
+        this.writer.write(y);
+        this.writer.write(z);
+        this.writer.write(z >> 24);
+        this.writer.write(z >> 16);
+        this.writer.write(z >> 8);
+        this.writer.write(z);
+        this.writer.write(((int) f >> 16) >> 24);
+        this.writer.write(((int) f >> 16) >> 16);
+        this.writer.write(((int) f >> 16) >> 8);
+        this.writer.write(((int) f >> 16));
+        this.writer.write(((int) f) >> 24);
+        this.writer.write(((int) f) >> 16);
+        this.writer.write(((int) f) >> 8);
+        this.writer.write(((int) f));
+    }
+
+    public void endWrite() throws IOException {
+        writer.close();
+    }
+
+    public void writeNode(char c) throws IOException {
+        writer.write(c);
     }
 
     public static Room fromFile(String file) throws IOException {
@@ -54,5 +117,25 @@ public class Room {
 
         reader.close();
         return new Room(file, x, y, z, f);
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getZ() {
+        return z;
+    }
+
+    public long getF() {
+        return f;
     }
 }

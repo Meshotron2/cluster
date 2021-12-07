@@ -9,6 +9,7 @@ public class Main {
     public static final String PROMPT = "> ";
 
     public static void main(String[] args) {
+//        System.out.println(System.getProperty("user.dir"));
         final Scanner scanner = new Scanner(System.in);
 
         final CLI cli = new CLI();

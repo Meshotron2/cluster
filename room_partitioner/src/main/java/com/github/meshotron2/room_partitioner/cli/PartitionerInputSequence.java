@@ -11,9 +11,9 @@ import java.util.Scanner;
 public class PartitionerInputSequence extends InputSequence<Partitioner> {
     public PartitionerInputSequence(Scanner scanner) {
         super(Main.PROMPT, scanner, Arrays.asList(
-                new PartitionerInput(scanner, "Xg"),
-                new PartitionerInput(scanner, "Yg"),
-                new PartitionerInput(scanner, "Zg")
+                new PartitionerInput(scanner, "Nodes along x axis (Xg)"),
+                new PartitionerInput(scanner, "Nodes along y axis (Yg)"),
+                new PartitionerInput(scanner, "Nodes along z axis (Zg)")
         ));
     }
 
