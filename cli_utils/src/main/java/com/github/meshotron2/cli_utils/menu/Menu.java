@@ -13,6 +13,8 @@ public abstract class Menu {
     private final Scanner scanner;
     private final String message;
 
+    private int choice = -1;
+
     /**
      * @param options A list with all the options of said menu
      * @param prompt  The prompt format
@@ -37,6 +39,8 @@ public abstract class Menu {
         final int option = (int) new MenuChoice(prompt, scanner, message, this).validate();
 
         choose(option);
+
+        this.choice = option;
     }
 
     protected abstract void choose(int option);
@@ -51,5 +55,9 @@ public abstract class Menu {
 
     public Scanner getScanner() {
         return scanner;
+    }
+
+    public int getChoice() {
+        return choice;
     }
 }

@@ -1,4 +1,4 @@
-package com.github.meshotron2.room_partitioner.partitioner;
+package com.github.meshotron2.room_creator;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -15,16 +15,14 @@ public class Room {
 
     private InputStream reader;
     private OutputStream writer;
-//    private RandomAccessFile randomWriter;
+    private RandomAccessFile randWriter;
 
-    Room(String file, int x, int y, int z, long f) {
+    public Room(String file, int x, int y, int z, long f) {
         this.file = file;
         this.x = x;
         this.y = y;
         this.z = z;
         this.f = f;
-
-        System.out.println(this.f);
     }
 
     public void startRead() throws IOException {
@@ -64,23 +62,42 @@ public class Room {
         this.writer.write(x >> 16);
         this.writer.write(x >> 8);
         this.writer.write(x);
+
+        System.out.println("x: " + (byte) (x >> 24) + (byte) (x >> 16) + (byte) (x >> 8) + (byte) (x));
+
         this.writer.write(y >> 24);
         this.writer.write(y >> 16);
         this.writer.write(y >> 8);
         this.writer.write(y);
-        this.writer.write(z);
+
+        System.out.println("y: " + (byte) (y >> 24) + (byte) (y >> 16) + (byte) (y >> 8) + (byte) (y));
+
         this.writer.write(z >> 24);
         this.writer.write(z >> 16);
         this.writer.write(z >> 8);
         this.writer.write(z);
-        this.writer.write((int) ((f >> 16) >> 24));
-        this.writer.write((int) ((f >> 16) >> 16));
-        this.writer.write((int) ((f >> 16) >> 8));
-        this.writer.write((int) (f >> 16));
-        this.writer.write(((int) f) >> 24);
-        this.writer.write(((int) f) >> 16);
-        this.writer.write(((int) f) >> 8);
-        this.writer.write(((int) f));
+
+        System.out.println("z: " + (byte) (z >> 24) + (byte) (z >> 16) + (byte) (x >> 8) + (byte) (z));
+
+//        this.writer.write((int) ((f >> 24) >> 32));
+//        this.writer.write((int) ((f >> 16) >> 32));
+//        this.writer.write((int) ((f >> 8) >> 32));
+//        this.writer.write((int) (f >> 32));
+//
+//        System.out.print("f: " + (byte) (int) ((f >> 24) >> 32) + (byte) (int) ((f >> 16) >> 32) + (byte) ((f >> 8) >> 32) + (byte) (f >> 32));
+
+        this.writer.write(0);
+        this.writer.write(0);
+        this.writer.write(0);
+        this.writer.write(0);
+
+        this.writer.write((int) ((int)f >> 24));
+        this.writer.write((int) ((int)f >> 16));
+        this.writer.write((int) ((int)f >> 8));
+        this.writer.write((int) ((int)f));
+
+        System.out.println(f);
+//        System.out.print((byte) (f >> 24) + (byte) (f >> 16) + (byte) (f >> 8) + (byte) (f) + "\n\n");
     }
 
     public void endWrite() throws IOException {
@@ -91,13 +108,17 @@ public class Room {
         writer.write(c);
     }
 
-//    public void startRandomWriter() {
-//        try {
-//            this.randomWriter = new RandomAccessFile(file, "r");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void writeNode(char c, int x, int y, int z) throws IOException {
+        final int n = 24 + x * y * z;
+
+        byte[] bytes = {(byte) (c >> 8), (byte) c};
+//        System.out.println(bytes.length);
+//        writer.write(bytes, n, 2);
+
+        randWriter = new RandomAccessFile(file, "rw");
+        randWriter.seek(n);
+        randWriter.write(bytes);
+    }
 
     public static Room fromFile(String file) throws IOException {
         final InputStream reader = new FileInputStream(file);

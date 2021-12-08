@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Partitioner {
 
-    private final Room room;
+    private Room room;
     private final int xg;
     private final int yg;
     private final int zg;
@@ -75,5 +75,9 @@ public class Partitioner {
     public boolean isCoordsValid() {
         // TODO: 12/4/21 validate if the integers make sense for this room
         return xg > 0 && yg > 0 && zg > 0;
+    }
+
+    public void setFile(Room room) {
+        this.room = room;
     }
 }
