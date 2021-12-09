@@ -79,25 +79,21 @@ public class Room {
 
         System.out.println("z: " + (byte) (z >> 24) + (byte) (z >> 16) + (byte) (x >> 8) + (byte) (z));
 
-//        this.writer.write((int) ((f >> 24) >> 32));
-//        this.writer.write((int) ((f >> 16) >> 32));
-//        this.writer.write((int) ((f >> 8) >> 32));
-//        this.writer.write((int) (f >> 32));
-//
-//        System.out.print("f: " + (byte) (int) ((f >> 24) >> 32) + (byte) (int) ((f >> 16) >> 32) + (byte) ((f >> 8) >> 32) + (byte) (f >> 32));
+//        https://stackoverflow.com/questions/10686178/convert-long-to-two-int-and-vice-versa
 
-        this.writer.write(0);
-        this.writer.write(0);
-        this.writer.write(0);
-        this.writer.write(0);
+        final int f1 = (int)(f >> 32);
+        this.writer.write(f1 >> 24);
+        this.writer.write(f1 >> 16);
+        this.writer.write(f1 >> 8);
+        this.writer.write(f1);
 
-        this.writer.write((int) ((int)f >> 24));
-        this.writer.write((int) ((int)f >> 16));
-        this.writer.write((int) ((int)f >> 8));
-        this.writer.write((int) ((int)f));
+        final int f2 = (int)f;
+        this.writer.write(f2 >> 24);
+        this.writer.write(f2 >> 16);
+        this.writer.write(f2 >> 8);
+        this.writer.write(f2);
 
-        System.out.println(f);
-//        System.out.print((byte) (f >> 24) + (byte) (f >> 16) + (byte) (f >> 8) + (byte) (f) + "\n\n");
+        System.out.println("f: " + ((long)f1 << 32 | f2 & 0xFFFFFFFFL));
     }
 
     public void endWrite() throws IOException {
