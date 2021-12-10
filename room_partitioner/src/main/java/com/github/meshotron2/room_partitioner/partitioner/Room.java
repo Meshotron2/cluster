@@ -68,19 +68,26 @@ public class Room {
         this.writer.write(y >> 16);
         this.writer.write(y >> 8);
         this.writer.write(y);
-        this.writer.write(z);
         this.writer.write(z >> 24);
         this.writer.write(z >> 16);
         this.writer.write(z >> 8);
         this.writer.write(z);
-        this.writer.write((int) ((f >> 16) >> 24));
-        this.writer.write((int) ((f >> 16) >> 16));
-        this.writer.write((int) ((f >> 16) >> 8));
-        this.writer.write((int) (f >> 16));
-        this.writer.write(((int) f) >> 24);
-        this.writer.write(((int) f) >> 16);
-        this.writer.write(((int) f) >> 8);
-        this.writer.write(((int) f));
+
+        //        https://stackoverflow.com/questions/10686178/convert-long-to-two-int-and-vice-versa
+
+        final int f1 = (int)(f >> 32);
+        this.writer.write(f1 >> 24);
+        this.writer.write(f1 >> 16);
+        this.writer.write(f1 >> 8);
+        this.writer.write(f1);
+
+        final int f2 = (int)f;
+        this.writer.write(f2 >> 24);
+        this.writer.write(f2 >> 16);
+        this.writer.write(f2 >> 8);
+        this.writer.write(f2);
+
+        System.out.println("f: " + ((long)f1 << 32 | f2 & 0xFFFFFFFFL));
     }
 
     public void endWrite() throws IOException {
@@ -124,7 +131,7 @@ public class Room {
         if (status != 4) return null;
         final int f2 = ((int) bs[0]) << 24 | ((int) bs[1]) << 16 | ((int) bs[2]) << 8 | ((int) bs[3]);
 
-        final long f = ((long) f2) << 32 | f1;
+        final long f = (long)f1 << 32 | f2 & 0xFFFFFFFFL;
 
         System.out.println("f: " + f);
         reader.close();
