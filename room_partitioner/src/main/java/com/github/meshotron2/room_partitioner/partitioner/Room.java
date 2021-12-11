@@ -95,7 +95,8 @@ public class Room {
     }
 
     public void writeNode(char c) throws IOException {
-        writer.write(c);
+        writer.write(c >> 8);
+        writer.write((byte) c);
     }
 
 //    public void startRandomWriter() {

@@ -24,29 +24,30 @@ public class Partitioner {
 
         System.out.println("PREVIOUSLY: " + room.getF());
 
-        final int xdiv = room.getX() / xg;
-        final int ydiv = room.getY() / yg;
-        final int zdiv = room.getZ() / zg;
+        int x = room.getX();
+        int y = room.getY();
+        int z = room.getZ();
+        final int xdiv = x / xg;
+        final int ydiv = y / yg;
+        final int zdiv = z / zg;
 
         final String basename = room.getFile().substring(0, room.getFile().length() - 4);
         final List<Room> rooms = new ArrayList<>();
 
         room.startRead();
-        for (int i = 0; i < xg; i++)
-            for (int j = 0; j < yg; j++)
-                for (int k = 0; k < zg; k++) {
-                    final int nodeNumber = i * yg * zg + j * zg + k;
-                    final Room r = new Room(basename + "_" + nodeNumber + ".dwm", xdiv, ydiv, zdiv, room.getF());
-                    r.startWrite();
-                    rooms.add(r);
-                }
+        for (int nodeNumber = 0; nodeNumber < xg * yg * zg; nodeNumber++) {
+            final Room r = new Room(basename + "_" + nodeNumber + ".dwm", xdiv, ydiv, zdiv, room.getF());
+            r.startWrite();
+            rooms.add(r);
+        }
 
-        for (int i = 0; i < xg; i++)
-            for (int j = 0; j < yg; j++)
-                for (int k = 0; k < zg; k++) {
-                    final int nodeNumber = i * yg * zg + j * zg + k;
-                    final Room r = rooms.get(nodeNumber);
-                    r.writeNode(room.readNode());
+        int cnt = 0;
+        for (int i = 0; i < x; i++)
+            for (int j = 0; j < y; j++)
+                for (int k = 0; k < z; k++) {
+                    final int nodeNumber = cnt++ % rooms.size();
+                    rooms.get(nodeNumber).writeNode(room.readNode());
+                    System.out.println("written " + cnt);
                 }
 
         for (Room room1 : rooms)
