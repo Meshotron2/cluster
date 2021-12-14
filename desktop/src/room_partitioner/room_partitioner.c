@@ -25,7 +25,7 @@ int main(void)
 
 void room_partitioning(const char* filename){
 	//char buf[6];
-	File* f_ptr = fopen(filename, 'r');
+	FILE* f_ptr = fopen(filename, 'r');
 	int x_g, y_g, z_g;
 	/*
 	fgets(buf, 6,f_ptr);
@@ -34,7 +34,7 @@ void room_partitioning(const char* filename){
 	depth = ;
 	height = ;
 	*/
-	printf("Specify the dimensions of the partitioning: ")
+	printf("Specify the dimensions of the partitioning: ");
 
 	printf("x_g: ");
 	scanf("%d", &x_g);

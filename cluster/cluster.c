@@ -1,8 +1,6 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include"types.h"
+#include "cluster.h"
 
-void readHeader(FILE *f, Header *h) 
+/*void readHeader(FILE* f, Header* h)
 {
 	int x;
 	int y;
@@ -20,28 +18,27 @@ void readHeader(FILE *f, Header *h)
 	h->frequency = fr;
 
 	// printf("(%d, %d, %d) @ %ld\n", x, y, z, fr);
-}
+}*/
 
 int main(int argc, char *argv[])
 {
 	if (argc != 2)
 	{
 		printf("Missing argument <file>\n");
-		return -1;
+		return EXIT_FAILURE;
 	}
 
 	FILE *inFile = fopen(argv[1], "rb");
 	if (!inFile) {
 		perror("fopen");
-		return -1;
+		return EXIT_FAILURE;
 	}
 
-	Header *h = malloc(sizeof(Header));
-	readHeader(inFile, h);
+	Header h = { 0 };
+	fread(&h, sizeof(Header), 1, inFile);
 
-	printf("%d, %d, %d @ %ld", h->x, h->y, h->z, h->frequency);
+	printf("%d, %d, %d @ %ld\n", h.x, h.y, h.z, h.frequency);
 
-	free(h);
-	return 0;
+	return EXIT_SUCCESS;
 }
 
