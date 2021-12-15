@@ -17,3 +17,5 @@ void scatter();
 void delay();
 
 void writeExcitation();
+	
+void fixHeaderEndian(Header*);

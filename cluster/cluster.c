@@ -17,11 +17,14 @@ int main(int argc, char *argv[])
 
 	Header h = { 0 };
 	fread(&h, sizeof(Header), 1, inFile);
+
+	fixHeaderEndian(&h);
 	
+	printf("%d, %d, %d @ %ld\n", h.x, h.y, h.z, h.frequency);
+	exit(0);
+
 	Node*** nodes = alloc_nodes(&h);
 	int hasSourcesReceivers = readNodes(nodes, &h, inFile);
-
-	printf("%d, %d, %d @ %ld\n", h.x, h.y, h.z, h.frequency);
 
 	if ((hasSourcesReceivers & 1) == 1)
 		readSample();
@@ -83,3 +86,31 @@ void scatter() {}
 void delay() {}
 
 void writeExcitation() {}
+
+void fixHeaderEndian(Header *h)
+{
+	h->x = ((int) h->x & 0x000000ff) << 24u |
+			((int) h->x & 0x0000ff00) << 8u |
+			((int) h->x & 0x00ff0000) >> 8u |
+			((int) h->x & 0xff000000) >> 24u;
+	
+	h->y = ((int) h->y & 0x000000ff) << 24u |
+			((int) h->y & 0x0000ff00) << 8u |
+			((int) h->y & 0x00ff0000) >> 8u |
+			((int) h->y & 0xff000000) >> 24u;
+	
+	h->z = ((int) h->z & 0x000000ff) << 24u |
+			((int) h->z & 0x0000ff00) << 8u |
+			((int) h->z & 0x00ff0000) >> 8u |
+			((int) h->z & 0xff000000) >> 24u;
+
+	h->frequency = 
+			(((int) (h->frequency >> 32) & 0x000000ff) << 24u |
+			((int) (h->frequency >> 32) & 0x0000ff00) << 8u |
+			((int) (h->frequency >> 32) & 0x00ff0000) >> 8u |
+			((int) (h->frequency >> 32) & 0xff000000) >> 24u )|
+			((int) h->frequency & 0x000000ff) << 24u |
+			((int) h->frequency & 0x0000ff00) << 8u |
+			((int) h->frequency & 0x00ff0000) >> 8u |
+			((int) h->frequency & 0xff000000) >> 24u;
+}
