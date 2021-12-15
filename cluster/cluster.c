@@ -45,6 +45,8 @@ int main(int argc, char *argv[])
 	if ((hasSourcesReceivers & 2) == 2)
 		writeExcitation();
 
+	free_nodes(&h, nodes);
+
 	return EXIT_SUCCESS;
 }
 
