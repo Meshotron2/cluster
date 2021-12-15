@@ -21,10 +21,11 @@ int main(int argc, char *argv[])
 	fixHeaderEndian(&h);
 	
 	printf("%d, %d, %d @ %ld\n", h.x, h.y, h.z, h.frequency);
-	exit(0);
 
 	Node*** nodes = alloc_nodes(&h);
 	int hasSourcesReceivers = readNodes(nodes, &h, inFile);
+	
+	exit(0);
 
 	if ((hasSourcesReceivers & 1) == 1)
 		readSample();
@@ -91,6 +92,7 @@ void writeExcitation() {}
 
 void fixHeaderEndian(Header *h)
 {
+#ifdef __linux__
 	h->x = ((int) h->x & 0x000000ff) << 24u |
 			((int) h->x & 0x0000ff00) << 8u |
 			((int) h->x & 0x00ff0000) >> 8u |
@@ -115,4 +117,16 @@ void fixHeaderEndian(Header *h)
 			((int) h->frequency & 0x0000ff00) << 8u |
 			((int) h->frequency & 0x00ff0000) >> 8u |
 			((int) h->frequency & 0xff000000) >> 24u;
+#endif
+}
+
+int fixInt(int i)
+{
+#ifdef __linux__
+	return	((int) i & 0x000000ff) << 24u |
+			((int) i & 0x0000ff00) << 8u |
+			((int) i & 0x00ff0000) >> 8u |
+			((int) i & 0xff000000) >> 24u;
+	
+#endif
 }
