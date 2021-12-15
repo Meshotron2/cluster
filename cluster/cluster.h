@@ -4,8 +4,9 @@
 #include<stdlib.h>
 
 #include"types.h"
+#include"node.h"
 
-int readNode(int ***node, Header *h, FILE *inFile); 
+int readNodes(Node ***node, Header *h, FILE *inFile); 
 
 void injectSample();
 
