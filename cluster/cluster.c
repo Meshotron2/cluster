@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 		if ((hasSourcesReceivers & 1) == 1)
 			injectSample();
 
-		scatter();
+		scatter(&h, nodes);
 
 		if ((hasSourcesReceivers & 2) == 2)
 			readSample(); // ------
@@ -59,9 +59,10 @@ int readNodes(Node ***nodes, Header *h, FILE *inFile)
 	Node n = { 0 };
 	char c;
 
-	for (int x = 0; x < h->x; x++)
-		for (int y = 0; y < h->y; y++)
-			for (int z = 0; z < h->z; z++)
+	int x, y, z;
+	for (x = 0; x < h->x; x++)
+		for (y = 0; y < h->y; y++)
+			for (z = 0; z < h->z; z++)
 			{
 				printf("%d %d %d\n", x, y, z);
 				fread(&c, sizeof(char), 1, inFile);
@@ -70,10 +71,11 @@ int readNodes(Node ***nodes, Header *h, FILE *inFile)
 				// set node type
 				nodes[x][y][z].type = c;
 			}
-	
-	for (int x = 0; x < h->x; x++)
-		for (int y = 0; y < h->y; y++)
-			for (int z = 0; z < h->z; z++)
+
+	int x, y, z;
+	for (x = 0; x < h->x; x++)
+		for (y = 0; y < h->y; y++)
+			for (z = 0; z < h->z; z++)
 				printf("%d, ", nodes[x][y][z].type);
 	printf("\n");
 
@@ -84,7 +86,48 @@ void readSample() {}
 
 void injectSample() {}
 
-void scatter() {}
+void scatter(Header *h, Node ***ns) 
+{
+/*   up
+ *    |z
+ *    |
+ *    |      y
+ *   ,.------- right
+ *  / 
+ *x/ front
+ */
+
+
+	Node *n;
+	int x, y, z;
+	for (x = 0; x < h->x; x++)
+		for (y = 0; y < h->y; y++)
+			for (z = 0; z < h->z; z++)
+			{
+				n = ns[x][y][z];
+				n->p = (n->pUpI + n->pDownI + n->pRightI + n->pLeftI + n->pFrontI + n->pBackI)/3;
+
+				if (n->type != ' ' && 
+					n->type != 'S' && 
+					n->type != 'R')
+				{
+					n->pUpO = n->p - n->pUpI;
+					n->pDownO = n->p - n->pDownI;
+					n->pRightO = n->p - n->pRightI;
+					n->pLeftO = n->p - n->pLeftI;
+					n->pFrontO = n->p - n->pFrontI;
+					n->pBackO = n->p - n->pBackI;
+				} else 
+				{
+					n->pUpO = n->p * n->pUpI;
+					n->pDownO = n->p * n->pDownI;
+					n->pRightO = n->p * n->pRightI;
+					n->pLeftO = n->p * n->pLeftI;
+					n->pFrontO = n->p * n->pFrontI;
+					n->pBackO = n->p * n->pBackI;
+				}
+			}
+}
 
 void delay() {}
 
