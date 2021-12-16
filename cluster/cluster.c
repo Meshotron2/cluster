@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	
 	printf("%d, %d, %d @ %ld\n", h.x, h.y, h.z, h.frequency);
 
-	Node*** nodes = alloc_nodes(&h);
+	Node*** nodes = allocNodes(&h);
 	int hasSourcesReceivers = readNodes(nodes, &h, inFile);
 	
 	exit(0);
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 	if ((hasSourcesReceivers & 2) == 2)
 		writeExcitation();
 
-	free_nodes(&h, nodes);
+	freeNodes(&h, nodes);
 
 	return EXIT_SUCCESS;
 }
@@ -72,7 +72,6 @@ int readNodes(Node ***nodes, Header *h, FILE *inFile)
 				nodes[x][y][z].type = c;
 			}
 
-	int x, y, z;
 	for (x = 0; x < h->x; x++)
 		for (y = 0; y < h->y; y++)
 			for (z = 0; z < h->z; z++)
@@ -100,17 +99,19 @@ void scatter(Header *h, Node ***ns)
 
 	Node *n;
 	int x, y, z;
+	float k;
 	for (x = 0; x < h->x; x++)
 		for (y = 0; y < h->y; y++)
 			for (z = 0; z < h->z; z++)
 			{
-				n = ns[x][y][z];
-				n->p = (n->pUpI + n->pDownI + n->pRightI + n->pLeftI + n->pFrontI + n->pBackI)/3;
+				n = &(ns[x][y][z]);
 
-				if (n->type != ' ' && 
-					n->type != 'S' && 
-					n->type != 'R')
+				if (n->type != STD_NODE && 
+					n->type != SRC_NODE && 
+					n->type != RCVR_NODE)
 				{
+					n->p = (n->pUpI + n->pDownI + n->pRightI + n->pLeftI + n->pFrontI + n->pBackI) / 3;
+					
 					n->pUpO = n->p - n->pUpI;
 					n->pDownO = n->p - n->pDownI;
 					n->pRightO = n->p - n->pRightI;
@@ -119,12 +120,14 @@ void scatter(Header *h, Node ***ns)
 					n->pBackO = n->p - n->pBackI;
 				} else 
 				{
-					n->pUpO = n->p * n->pUpI;
-					n->pDownO = n->p * n->pDownI;
-					n->pRightO = n->p * n->pRightI;
-					n->pLeftO = n->p * n->pLeftI;
-					n->pFrontO = n->p * n->pFrontI;
-					n->pBackO = n->p * n->pBackI;
+					k = getNodeReflectionCoefficient(n);
+					
+					n->pUpO = k * n->pUpI;
+					n->pDownO = k * n->pDownI;
+					n->pRightO = k * n->pRightI;
+					n->pLeftO = k * n->pLeftI;
+					n->pFrontO = k * n->pFrontI;
+					n->pBackO = k * n->pBackI;
 				}
 			}
 }
