@@ -117,6 +117,7 @@ int getAllNodesOfType(Node*** buf, const Header* header, const Node*** nodes, co
 	Node** n = NULL;
 	int nodeCount = 0;
 	
+	//first pass to fing out how many nodes there are
 	for (int x = 0; x < header->x; x++)
 	{
 		for (int y = 0; y < header->y; y++)
@@ -125,44 +126,39 @@ int getAllNodesOfType(Node*** buf, const Header* header, const Node*** nodes, co
 			{
 				if (nodes[x][y][z].type == type)
 				{
-					if (n == NULL)
-					{
-						n = malloc(sizeof(Node*));
-						if (n == NULL)
-						{
-							fprintf(stderr, "Out of memory");
-							exit(EXIT_FAILURE);
-						}
-					}
-					else
-					{
-						Node** np = realloc(n, sizeof(Node*) * (nodeCount+1));
-						if (np == NULL)
-						{
-							fprintf(stderr, "Out of memory");
-							exit(EXIT_FAILURE);
-						}
-						n = np;
-					}
-
-					n[nodeCount] = &(nodes[x][y][z]);
 					nodeCount++;
 				}
 			}
 		}
 	}
 
+	if (!nodeCount) return 0;
+
+	//allocate required memory
+	n = malloc(sizeof(Node*) * nodeCount);
 	if (n == NULL)
 	{
-		return 0;
+		fprintf(stderr, "Out of memory");
+		exit(EXIT_FAILURE);
+	}
+
+	nodeCount = 0;
+	//second pass to fill the array
+	for (int x = 0; x < header->x; x++)
+	{
+		for (int y = 0; y < header->y; y++)
+		{
+			for (int z = 0; z < header->x; z++)
+			{
+				if (nodes[x][y][z].type == type)
+				{
+					n[nodeCount++] = &(nodes[x][y][z]);
+				}
+			}
+		}
 	}
 	
 	*buf = n;
 
 	return nodeCount;
 }
-
-//Node* getNodeNeighbours(const Node* node, const Header* header, const Node*** nodes)
-//{
-//	
-//}

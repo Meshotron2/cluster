@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 	Node*** nodes = allocNodes(&h);
 	int hasSourcesReceivers = readNodes(nodes, &h, inFile);
-	
+
 	exit(0);
 
 	if ((hasSourcesReceivers & 1) == 1)
@@ -35,12 +35,12 @@ int main(int argc, char *argv[])
 		if ((hasSourcesReceivers & 1) == 1)
 			injectSample();
 
-		scatter(&h, nodes);
+		scatterPass(&h, nodes);
 
 		if ((hasSourcesReceivers & 2) == 2)
 			readSample(); // ------
 
-		delay();
+		delayPass(&h, nodes);
 	}
 
 	if ((hasSourcesReceivers & 2) == 2)
@@ -85,7 +85,7 @@ void readSample() {}
 
 void injectSample() {}
 
-void scatter(Header *h, Node ***ns) 
+void scatterPass(const Header *h, Node ***ns) 
 {
 /*   up
  *    |z
@@ -132,7 +132,62 @@ void scatter(Header *h, Node ***ns)
 			}
 }
 
-void delay() {}
+void delayPass(const Header* h, Node*** ns)
+{
+/*   up
+*    |z
+*    |
+*    |      y
+*   ,.------- right
+*  /
+*x/ front
+*/
+
+
+	Node* n;
+	int x, y, z;
+	
+	// this loop can be optimized to not have to do these ifs and only process nodes that have all neighbours but then we'd have to process all the others seperately.
+	// its fine for now
+
+	for (x = 0; x < h->x; x++)
+	{
+		for (y = 0; y < h->y; y++)
+		{
+			for (z = 0; z < h->z; z++)
+			{
+				n = &(ns[x][y][z]);
+
+				if (x != 0)	// back
+				{
+					ns[x - 1][y][z].pBackI = n->pBackO;
+				}
+				if (x < h->x) // front
+				{
+					ns[x + 1][y][z].pFrontI = n->pFrontO;
+				}
+
+				if (y != 0)	// left
+				{
+					ns[x][y - 1][z].pLeftI = n->pLeftO;
+				}
+				if (y < h->y) // right
+				{
+					ns[x][y + 1][z].pRightI = n->pRightO;
+				}
+
+				if (z != 0)	// down
+				{
+					ns[x][y][z - 1].pDownI = n->pDownO;
+				}
+				if (z < h->z) // up
+				{
+					ns[x][y][z + 1].pUpI = n->pUpO;
+				}
+			}
+		}
+	}
+}
 
 void writeExcitation() {}
 
