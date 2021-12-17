@@ -106,7 +106,7 @@ void scatterPass(const Header *h, Node ***ns)
 			{
 				n = &(ns[x][y][z]);
 
-				if (n->type == STD_NODE || 
+				if (n->type == AIR_NODE || 
 					n->type == SRC_NODE || 
 					n->type == RCVR_NODE)
 				{

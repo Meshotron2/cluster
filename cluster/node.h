@@ -21,7 +21,7 @@ typedef struct Node {
 } Node;
 
 //node types
-#define STD_NODE ' '
+#define AIR_NODE ' '
 #define SRC_NODE 'S'
 #define RCVR_NODE 'R'
 #define RHO_0 'A'
