@@ -106,9 +106,9 @@ void scatter(Header *h, Node ***ns)
 			{
 				n = &(ns[x][y][z]);
 
-				if (n->type != STD_NODE && 
-					n->type != SRC_NODE && 
-					n->type != RCVR_NODE)
+				if (n->type == STD_NODE || 
+					n->type == SRC_NODE || 
+					n->type == RCVR_NODE)
 				{
 					n->p = (n->pUpI + n->pDownI + n->pRightI + n->pLeftI + n->pFrontI + n->pBackI) / 3;
 					
