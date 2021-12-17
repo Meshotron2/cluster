@@ -54,4 +54,4 @@ float getNodeReflectionCoefficient(const Node* n);
 // Makes buf point to a Point array containing the positions of all nodes of type 
 // Returns the number of nodes of type found.
 // This function allocates memory that must be released
-int getAllNodesOfType(Point** buf, const Header* header, const Node*** nodes, const char type);
+int getAllNodesOfType(Node*** buf, const Header* header, const Node*** nodes, const char type);

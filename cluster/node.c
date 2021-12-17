@@ -112,10 +112,10 @@ float getNodeReflectionCoefficient(const Node* n)
 	}
 }
 
-int getAllNodesOfType(Point** buf, const Header* header, const Node*** nodes, const char type)
+int getAllNodesOfType(Node*** buf, const Header* header, const Node*** nodes, const char type)
 {
-	Point* points = NULL;
-	int pointCount = 0;
+	Node** n = NULL;
+	int nodeCount = 0;
 	
 	for (int x = 0; x < header->x; x++)
 	{
@@ -125,10 +125,10 @@ int getAllNodesOfType(Point** buf, const Header* header, const Node*** nodes, co
 			{
 				if (nodes[x][y][z].type == type)
 				{
-					if (points == NULL)
+					if (n == NULL)
 					{
-						points = malloc(sizeof(Point));
-						if (points == NULL)
+						n = malloc(sizeof(Node*));
+						if (n == NULL)
 						{
 							fprintf(stderr, "Out of memory");
 							exit(EXIT_FAILURE);
@@ -136,25 +136,33 @@ int getAllNodesOfType(Point** buf, const Header* header, const Node*** nodes, co
 					}
 					else
 					{
-						Point* rp = realloc(points, sizeof(Point) * pointCount+1);
-						if (rp == NULL)
+						Node** np = realloc(n, sizeof(Node*) * (nodeCount+1));
+						if (np == NULL)
 						{
 							fprintf(stderr, "Out of memory");
 							exit(EXIT_FAILURE);
 						}
-						points = rp;
+						n = np;
 					}
 
-					points[pointCount].x = x;
-					points[pointCount].y = y;
-					points[pointCount].z = z;
-					pointCount++;
+					n[nodeCount] = &(nodes[x][y][z]);
+					nodeCount++;
 				}
 			}
 		}
 	}
 
-	*buf = points;
+	if (n == NULL)
+	{
+		return 0;
+	}
+	
+	*buf = n;
 
-	return pointCount;
+	return nodeCount;
 }
+
+//Node* getNodeNeighbours(const Node* node, const Header* header, const Node*** nodes)
+//{
+//	
+//}
