@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="aad86200-5743-4572-88fe-34455a46c660" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../cluster/room.dwm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../room_creator/room.dwm" beforeDir="false" afterPath="$PROJECT_DIR$/../room_creator/room.dwm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room.dwm" beforeDir="false" afterPath="$PROJECT_DIR$/room.dwm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room_0.dwm" beforeDir="false" afterPath="$PROJECT_DIR$/room_0.dwm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room_1.dwm" beforeDir="false" afterPath="$PROJECT_DIR$/room_1.dwm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room_2.dwm" beforeDir="false" afterPath="$PROJECT_DIR$/room_2.dwm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room_3.dwm" beforeDir="false" afterPath="$PROJECT_DIR$/room_3.dwm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room_4.dwm" beforeDir="false" afterPath="$PROJECT_DIR$/room_4.dwm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room_5.dwm" beforeDir="false" afterPath="$PROJECT_DIR$/room_5.dwm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room_6.dwm" beforeDir="false" afterPath="$PROJECT_DIR$/room_6.dwm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/room_7.dwm" beforeDir="false" afterPath="$PROJECT_DIR$/room_7.dwm" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="21gf4LmK9f80U1BcjFPcaDxpuDJ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../cli_utils" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn package" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.github.meshotron2.room_partitioner.Main" />
+      <module name="room_partitioner" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.github.meshotron2.room_partitioner.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="aad86200-5743-4572-88fe-34455a46c660" name="Changes" comment="" />
+      <created>1638367460571</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1638367460571</updated>
+      <workItem from="1638367462422" duration="19000" />
+      <workItem from="1638367518357" duration="1080000" />
+      <workItem from="1638377577079" duration="35000" />
+      <workItem from="1638377632446" duration="3169000" />
+      <workItem from="1638537293267" duration="10000" />
+      <workItem from="1638542709886" duration="12000" />
+      <workItem from="1638648611059" duration="1245000" />
+      <workItem from="1638788326331" duration="3162000" />
+      <workItem from="1638798050109" duration="2876000" />
+      <workItem from="1638804138811" duration="760000" />
+      <workItem from="1638863880579" duration="2801000" />
+      <workItem from="1638868538229" duration="582000" />
+      <workItem from="1638883930438" duration="1484000" />
+      <workItem from="1638885424438" duration="8000" />
+      <workItem from="1638898475171" duration="286000" />
+      <workItem from="1638903612034" duration="9000" />
+      <workItem from="1638904678708" duration="2195000" />
+      <workItem from="1638952643904" duration="437000" />
+      <workItem from="1638955742625" duration="151000" />
+      <workItem from="1638956014594" duration="50000" />
+      <workItem from="1638956271203" duration="1724000" />
+      <workItem from="1638969994904" duration="380000" />
+      <workItem from="1638971365619" duration="15000" />
+      <workItem from="1639079468765" duration="186000" />
+      <workItem from="1639123783495" duration="1687000" />
+      <workItem from="1639148741742" duration="631000" />
+      <workItem from="1639226111483" duration="1622000" />
+      <workItem from="1639296044044" duration="6000" />
+      <workItem from="1639303705708" duration="282000" />
+      <workItem from="1639484221856" duration="758000" />
+      <workItem from="1639492807673" duration="3000" />
+      <workItem from="1639598101049" duration="584000" />
+      <workItem from="1639680514059" duration="6000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
