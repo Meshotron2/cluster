@@ -18,6 +18,8 @@ int main(int argc, char *argv[])
 	Header h = { 0 };
 	fread(&h, sizeof(Header), 1, inFile);
 
+	// todo: this should not be necessary 
+	// if the room is created with endian in mind
 	fixHeaderEndian(&h);
 	
 	printf("%d, %d, %d @ %ld\n", h.x, h.y, h.z, h.frequency);
@@ -87,11 +89,11 @@ void injectSample() {}
 
 void scatter(Header *h, Node ***ns) 
 {
-/*   up
- *    |z
- *    |
- *    |      y
- *   ,.------- right
+/*  up
+ *   |z
+ *   |
+ *   |      y
+ *   ._______ right
  *  / 
  *x/ front
  */
@@ -132,7 +134,38 @@ void scatter(Header *h, Node ***ns)
 			}
 }
 
-void delay() {}
+void delay(Header *h, Node ***ns) {
+/*  up
+ *   |z
+ *   |
+ *   |      y
+ *   ._______ right
+ *  / 
+ *x/ front
+ */
+	Node *n;
+	int x, y, z;
+	float k;
+	for (x = 0; x < h->x; x++)
+		for (y = 0; y < h->y; y++)
+			for (z = 0; z < h->z; z++)
+			{
+				n = &(ns[x][y][z]);
+
+				if(z+1 < h->z)
+					&(n[x][y][z+1])->pDownI  = n->pUpO;
+				if(z != 0)
+					&(n[x][y][z-1])->pUpI    = n->pDownO;
+				if(y+1 < h->y)
+					&(n[x][y+1][z])->pLeftI  = n->pRightO;
+				if(y != 0)
+					&(n[x][y-1][z])->pRightI = n->pLeftO;
+				if(x+1 < h->x)
+					&(n[x+1][y][z])->pBackI  = n->pFrontO;
+				if(x != 0)
+					&(n[x-1][y][z])->pFrontI = n->pBackO;
+			}	
+}
 
 void writeExcitation() {}
 
