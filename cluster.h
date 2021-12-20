@@ -12,9 +12,9 @@ void injectSample();
 
 void readSample();
 
-void scatter();
+void scatterPass(const Header* h, Node*** ns);
 
-void delay();
+void delayPass(const Header* h, Node*** ns);
 
 void writeExcitation();
 	

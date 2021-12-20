@@ -18,15 +18,13 @@ int main(int argc, char *argv[])
 	Header h = { 0 };
 	fread(&h, sizeof(Header), 1, inFile);
 
-	// todo: this should not be necessary 
-	// if the room is created with endian in mind
 	fixHeaderEndian(&h);
 	
 	printf("%d, %d, %d @ %ld\n", h.x, h.y, h.z, h.frequency);
 
 	Node*** nodes = allocNodes(&h);
 	int hasSourcesReceivers = readNodes(nodes, &h, inFile);
-	
+
 	exit(0);
 
 	if ((hasSourcesReceivers & 1) == 1)
@@ -37,12 +35,12 @@ int main(int argc, char *argv[])
 		if ((hasSourcesReceivers & 1) == 1)
 			injectSample();
 
-		scatter(&h, nodes);
+		scatterPass(&h, nodes);
 
 		if ((hasSourcesReceivers & 2) == 2)
 			readSample(); // ------
 
-		delay();
+		delayPass(&h, nodes);
 	}
 
 	if ((hasSourcesReceivers & 2) == 2)
@@ -87,13 +85,13 @@ void readSample() {}
 
 void injectSample() {}
 
-void scatter(Header *h, Node ***ns) 
+void scatterPass(const Header *h, Node ***ns) 
 {
-/*  up
- *   |z
- *   |
- *   |      y
- *   ._______ right
+/*   up
+ *    |z
+ *    |
+ *    |      y
+ *   ,.------- right
  *  / 
  *x/ front
  */
@@ -108,9 +106,9 @@ void scatter(Header *h, Node ***ns)
 			{
 				n = &(ns[x][y][z]);
 
-				if (n->type != STD_NODE && 
-					n->type != SRC_NODE && 
-					n->type != RCVR_NODE)
+				if (n->type == AIR_NODE || 
+					n->type == SRC_NODE || 
+					n->type == RCVR_NODE)
 				{
 					n->p = (n->pUpI + n->pDownI + n->pRightI + n->pLeftI + n->pFrontI + n->pBackI) / 3;
 					
@@ -134,37 +132,61 @@ void scatter(Header *h, Node ***ns)
 			}
 }
 
-void delay(Header *h, Node ***ns) {
-/*  up
- *   |z
- *   |
- *   |      y
- *   ._______ right
- *  / 
- *x/ front
- */
-	Node *n;
+void delayPass(const Header* h, Node*** ns)
+{
+/*   up
+*    |z
+*    |
+*    |      y
+*   ,.------- right
+*  /
+*x/ front
+*/
+
+
+	Node* n;
 	int x, y, z;
-	float k;
+	
+	// this loop can be optimized to not have to do these ifs and only process nodes that have all neighbours but then we'd have to process all the others seperately.
+	// its fine for now
+
 	for (x = 0; x < h->x; x++)
+	{
 		for (y = 0; y < h->y; y++)
+		{
 			for (z = 0; z < h->z; z++)
 			{
 				n = &(ns[x][y][z]);
 
-				if(z+1 < h->z)
-					&(n[x][y][z+1])->pDownI  = n->pUpO;
-				if(z != 0)
-					&(n[x][y][z-1])->pUpI    = n->pDownO;
-				if(y+1 < h->y)
-					&(n[x][y+1][z])->pLeftI  = n->pRightO;
-				if(y != 0)
-					&(n[x][y-1][z])->pRightI = n->pLeftO;
-				if(x+1 < h->x)
-					&(n[x+1][y][z])->pBackI  = n->pFrontO;
-				if(x != 0)
-					&(n[x-1][y][z])->pFrontI = n->pBackO;
-			}	
+				if (x != 0)	// back
+				{
+					ns[x - 1][y][z].pBackI = n->pBackO;
+				}
+				if (x < h->x) // front
+				{
+					ns[x + 1][y][z].pFrontI = n->pFrontO;
+				}
+
+				if (y != 0)	// left
+				{
+					ns[x][y - 1][z].pLeftI = n->pLeftO;
+				}
+				if (y < h->y) // right
+				{
+					ns[x][y + 1][z].pRightI = n->pRightO;
+				}
+
+				if (z != 0)	// down
+				{
+					ns[x][y][z - 1].pDownI = n->pDownO;
+				}
+				if (z < h->z) // up
+				{
+					ns[x][y][z + 1].pUpI = n->pUpO;
+				}
+			}
+		}
+	}
 }
 
 void writeExcitation() {}

@@ -112,11 +112,12 @@ float getNodeReflectionCoefficient(const Node* n)
 	}
 }
 
-int getAllNodesOfType(Point** buf, const Header* header, const Node*** nodes, const char type)
+int getAllNodesOfType(Node*** buf, const Header* header, const Node*** nodes, const char type)
 {
-	Point* points = NULL;
-	int pointCount = 0;
+	Node** n = NULL;
+	int nodeCount = 0;
 	
+	//first pass to fing out how many nodes there are
 	for (int x = 0; x < header->x; x++)
 	{
 		for (int y = 0; y < header->y; y++)
@@ -125,36 +126,39 @@ int getAllNodesOfType(Point** buf, const Header* header, const Node*** nodes, co
 			{
 				if (nodes[x][y][z].type == type)
 				{
-					if (points == NULL)
-					{
-						points = malloc(sizeof(Point));
-						if (points == NULL)
-						{
-							fprintf(stderr, "Out of memory");
-							exit(EXIT_FAILURE);
-						}
-					}
-					else
-					{
-						Point* rp = realloc(points, sizeof(Point) * pointCount+1);
-						if (rp == NULL)
-						{
-							fprintf(stderr, "Out of memory");
-							exit(EXIT_FAILURE);
-						}
-						points = rp;
-					}
-
-					points[pointCount].x = x;
-					points[pointCount].y = y;
-					points[pointCount].z = z;
-					pointCount++;
+					nodeCount++;
 				}
 			}
 		}
 	}
 
-	*buf = points;
+	if (!nodeCount) return 0;
 
-	return pointCount;
+	//allocate required memory
+	n = malloc(sizeof(Node*) * nodeCount);
+	if (n == NULL)
+	{
+		fprintf(stderr, "Out of memory");
+		exit(EXIT_FAILURE);
+	}
+
+	nodeCount = 0;
+	//second pass to fill the array
+	for (int x = 0; x < header->x; x++)
+	{
+		for (int y = 0; y < header->y; y++)
+		{
+			for (int z = 0; z < header->x; z++)
+			{
+				if (nodes[x][y][z].type == type)
+				{
+					n[nodeCount++] = &(nodes[x][y][z]);
+				}
+			}
+		}
+	}
+	
+	*buf = n;
+
+	return nodeCount;
 }
