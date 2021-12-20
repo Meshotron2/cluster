@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/Cluster.dir/cluster.c.o CMakeFiles/Cluster.dir/node.c.o -o Cluster  -lm 

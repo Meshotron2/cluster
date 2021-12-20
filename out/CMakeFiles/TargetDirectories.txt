@@ -1,0 +1,3 @@
+/home/me/Documents/uni/Ano3-Sem1/PECI/código/cluster/cluster/out/CMakeFiles/Cluster.dir
+/home/me/Documents/uni/Ano3-Sem1/PECI/código/cluster/cluster/out/CMakeFiles/edit_cache.dir
+/home/me/Documents/uni/Ano3-Sem1/PECI/código/cluster/cluster/out/CMakeFiles/rebuild_cache.dir

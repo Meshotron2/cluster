@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c8667dd5-ffb8-4ecc-b0e7-3418d222747e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../room_creator/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../room_creator/src/main/java/com/github/meshotron2/room_creator/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../room_creator/src/main/java/com/github/meshotron2/room_creator/Room.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../room_creator/src/main/java/com/github/meshotron2/room_creator/cli/inputs/CoordinateInput.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../room_creator/src/main/java/com/github/meshotron2/room_creator/cli/inputs/FrequencyInput.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../room_creator/src/main/java/com/github/meshotron2/room_creator/cli/inputs/RoomInput.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../room_creator/src/main/java/com/github/meshotron2/room_creator/cli/menus/FrequencyMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../room_creator/src/main/java/com/github/meshotron2/room_creator/cli/menus/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/meshotron2/cli_utils/menu/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/meshotron2/cli_utils/menu/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/CMakeFiles/Progress/count.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/CMakeFiles/Progress/count.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_creator/App" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_creator/App" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_creator/CMakeFiles/App.dir/app.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_creator/CMakeFiles/App.dir/app.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_creator/CMakeFiles/App.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_creator/CMakeFiles/App.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_creator/CMakeFiles/App.dir/compiler_depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_creator/CMakeFiles/App.dir/compiler_depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_creator/CMakeFiles/App.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_creator/CMakeFiles/App.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_creator/CMakeFiles/App.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_creator/CMakeFiles/App.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_creator/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_creator/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_creator/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_creator/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_partitioner/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_partitioner/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_partitioner/CMakeFiles/room_partitioner.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_partitioner/CMakeFiles/room_partitioner.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_partitioner/CMakeFiles/room_partitioner.dir/compiler_depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_partitioner/CMakeFiles/room_partitioner.dir/compiler_depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_partitioner/CMakeFiles/room_partitioner.dir/compiler_depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_partitioner/CMakeFiles/room_partitioner.dir/compiler_depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_partitioner/CMakeFiles/room_partitioner.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_partitioner/CMakeFiles/room_partitioner.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/build/room_partitioner/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/build/room_partitioner/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/src/room_creator/app.c" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/src/room_creator/app.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../room_partitioner/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../room_partitioner/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../room_partitioner/src/main/java/com/github/meshotron2/room_partitioner/cli/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/../room_partitioner/src/main/java/com/github/meshotron2/room_partitioner/cli/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../room_partitioner/src/main/java/com/github/meshotron2/room_partitioner/partitioner/Partitioner.java" beforeDir="false" afterPath="$PROJECT_DIR$/../room_partitioner/src/main/java/com/github/meshotron2/room_partitioner/partitioner/Partitioner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../room_partitioner/src/main/java/com/github/meshotron2/room_partitioner/partitioner/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/../room_partitioner/src/main/java/com/github/meshotron2/room_partitioner/partitioner/Room.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="21gf73QUZvKBlcw9SQ7Lv23jnth" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn install" />
+    </option>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c8667dd5-ffb8-4ecc-b0e7-3418d222747e" name="Changes" comment="" />
+      <created>1638367481337</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1638367481337</updated>
+      <workItem from="1638367482464" duration="35000" />
+      <workItem from="1638367695850" duration="904000" />
+      <workItem from="1638377504855" duration="71000" />
+      <workItem from="1638377612998" duration="19000" />
+      <workItem from="1638378281554" duration="2519000" />
+      <workItem from="1638956965224" duration="622000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
