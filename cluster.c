@@ -4,7 +4,7 @@ int main(int argc, char *argv[])
 {
 	if (argc != 3)
 	{
-		printf("Missing argument <file> <runtime>\n");
+		fprintf(stderr, "Missing argument <file> <runtime>\n");
 		return EXIT_FAILURE;
 	}
 
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	int iterationCnt = (int)ceil(atof(argv[2]) * h.frequency);
 	if (!iterationCnt)
 	{
-		printf("Failed to parse <runtime>. Exiting.");
+		fprintf(stderr, "Failed to parse <runtime>. Exiting.");
 		exit(EXIT_FAILURE);
 	}
 	
@@ -30,12 +30,14 @@ int main(int argc, char *argv[])
 	Node*** nodes = allocNodes(&h);
 	readNodes(nodes, &h, inFile);
 
+	fclose(inFile);
+
 	Node** sources;
 	int sourceCnt = getAllNodesOfType(&sources, &h, nodes, SRC_NODE);
 
 	if (sourceCnt == 0)
 	{
-		printf("No sources found. Exiting.\n");
+		fprintf(stderr, "No sources found. Exiting.\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -44,7 +46,7 @@ int main(int argc, char *argv[])
 
 	if (receiverCnt == 0)
 	{
-		printf("No receivers found. Exiting.\n");
+		fprintf(stderr, "No receivers found. Exiting.\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -60,8 +62,7 @@ int main(int argc, char *argv[])
 		delayPass(&h, nodes);
 	}
 
-	//if ((hasSourcesReceivers & 2) == 2)
-	//	writeExcitation();
+	writeExcitation(receiversData, receiverCnt, iterationCnt);
 
 	freeNodes(&h, nodes);
 	freeAllNodesOfType(&receivers);
@@ -217,7 +218,34 @@ void delayPass(const Header* h, Node*** ns)
 	}
 }
 
-void writeExcitation() {}
+void writeExcitation(float** buf, const int receiverCount, const int iterationCnt)
+{
+	FILE* file;
+
+	for (int i = 0; i < receiverCount; i++)
+	{
+		// similar to printf but writes to a buffer and returns the number of characters in the resulting string (excluding '\0')
+		// passing NULL and 0 as first parameters so we can get the required buffer size
+		int size = snprintf(NULL, 0, "receiver_%d.dwm", i) + 1;
+		
+		// allocating the required memory
+		char* filename = malloc(size);
+
+		if (filename == NULL)
+		{
+			fprintf(stderr, "Out of memory");
+			exit(EXIT_FAILURE);
+		}
+
+		// write the string to the buffer
+		snprintf(filename, size, "receiver_%d.dwm", i);
+
+		// open file, write and close
+		file = fopen(filename, "w");
+		fwrite(buf[i], sizeof(float), iterationCnt, file);
+		fclose(file);
+	}
+}
 
 void fixHeaderEndian(Header *h)
 {

@@ -16,6 +16,6 @@ void scatterPass(const Header* h, Node*** ns);
 
 void delayPass(const Header* h, Node*** ns);
 
-void writeExcitation();
+void writeExcitation(float** buf, const int receiverCount, const int iterationCnt);
 	
 void fixHeaderEndian(Header*);
