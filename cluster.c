@@ -226,11 +226,10 @@ void writeExcitation(float** buf, const int receiverCount, const int iterationCn
 	{
 		// similar to printf but writes to a buffer and returns the number of characters in the resulting string (excluding '\0')
 		// passing NULL and 0 as first parameters so we can get the required buffer size
-		int size = snprintf(NULL, 0, "receiver_%d.dwm", i) + 1;
+		int size = snprintf(NULL, 0, "receiver_%d.pcm", i) + 1;
 		
 		// allocating the required memory
 		char* filename = malloc(size);
-
 		if (filename == NULL)
 		{
 			fprintf(stderr, "Out of memory");
@@ -238,7 +237,7 @@ void writeExcitation(float** buf, const int receiverCount, const int iterationCn
 		}
 
 		// write the string to the buffer
-		snprintf(filename, size, "receiver_%d.dwm", i);
+		snprintf(filename, size, "receiver_%d.pcm", i);
 
 		// open file, write and close
 		file = fopen(filename, "w");
