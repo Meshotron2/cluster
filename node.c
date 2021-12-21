@@ -112,12 +112,12 @@ float getNodeReflectionCoefficient(const Node* n)
 	}
 }
 
-int getAllNodesOfType(Node*** buf, const Header* header, const Node*** nodes, const char type)
+int getAllNodesOfType(Node*** buf, const Header* header, Node*** nodes, const char type)
 {
 	Node** n = NULL;
 	int nodeCount = 0;
 	
-	//first pass to fing out how many nodes there are
+	//first pass to find out how many nodes there are
 	for (int x = 0; x < header->x; x++)
 	{
 		for (int y = 0; y < header->y; y++)
@@ -161,4 +161,46 @@ int getAllNodesOfType(Node*** buf, const Header* header, const Node*** nodes, co
 	*buf = n;
 
 	return nodeCount;
+}
+
+void freeAllNodesOfType(Node*** buf)
+{
+	free(*buf);
+	*buf = NULL;
+}
+
+float** allocReceiversMemory(const int receiverCount, const int iterationCount)
+{
+	if (receiverCount == 0) return 0;
+
+	float** fpArr = malloc(sizeof(float*) * receiverCount);
+
+	if (fpArr == NULL)
+	{
+		fprintf(stderr, "Out of memory");
+		exit(EXIT_FAILURE);
+	}
+
+	for (int i = 0; i < receiverCount; i++)
+	{
+		float* arr = malloc(sizeof(float) * iterationCount);
+		if (arr == NULL)
+		{
+			fprintf(stderr, "Out of memory");
+			exit(EXIT_FAILURE);
+		}
+		fpArr[i] = arr;
+	}
+
+	return fpArr;
+}
+
+void freeReceiversMemory(float*** buf, const int receiverCount)
+{
+	for (int i = 0; i < receiverCount; i++)
+	{
+		free((*buf)[i]);
+	}
+	free(*buf);
+	*buf = NULL;
 }

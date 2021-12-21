@@ -2,9 +2,9 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc != 2)
+	if (argc != 3)
 	{
-		printf("Missing argument <file>\n");
+		printf("Missing argument <file> <runtime>\n");
 		return EXIT_FAILURE;
 	}
 
@@ -18,40 +18,60 @@ int main(int argc, char *argv[])
 	Header h = { 0 };
 	fread(&h, sizeof(Header), 1, inFile);
 
-	fixHeaderEndian(&h);
+	int iterationCnt = (int)ceil(atof(argv[2]) * h.frequency);
+	if (!iterationCnt)
+	{
+		printf("Failed to parse <runtime>. Exiting.");
+		exit(EXIT_FAILURE);
+	}
 	
 	printf("%d, %d, %d @ %ld\n", h.x, h.y, h.z, h.frequency);
 
 	Node*** nodes = allocNodes(&h);
-	int hasSourcesReceivers = readNodes(nodes, &h, inFile);
+	readNodes(nodes, &h, inFile);
 
-	exit(0);
+	Node** sources;
+	int sourceCnt = getAllNodesOfType(&sources, &h, nodes, SRC_NODE);
 
-	if ((hasSourcesReceivers & 1) == 1)
-		readSample();
-
-	while (1) // ! lastIteration
+	if (sourceCnt == 0)
 	{
-		if ((hasSourcesReceivers & 1) == 1)
-			injectSample();
+		printf("No sources found. Exiting.\n");
+		exit(EXIT_FAILURE);
+	}
 
+	Node** receivers;
+	int receiverCnt = getAllNodesOfType(&receivers, &h, nodes, RCVR_NODE);
+
+	if (receiverCnt == 0)
+	{
+		printf("No receivers found. Exiting.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	float** receiversData = allocReceiversMemory(receiverCnt, iterationCnt);
+
+	injectSamples(sources, sourceCnt);
+	for (int i = 0; i < iterationCnt; i++) // ! lastIteration
+	{
 		scatterPass(&h, nodes);
 
-		if ((hasSourcesReceivers & 2) == 2)
-			readSample(); // ------
+		readSamples(receivers, receiversData, receiverCnt, i);
 
 		delayPass(&h, nodes);
 	}
 
-	if ((hasSourcesReceivers & 2) == 2)
-		writeExcitation();
+	//if ((hasSourcesReceivers & 2) == 2)
+	//	writeExcitation();
 
 	freeNodes(&h, nodes);
+	freeAllNodesOfType(&receivers);
+	freeAllNodesOfType(&sources);
+	freeReceiversMemory(&receiversData, receiverCnt);
 
 	return EXIT_SUCCESS;
 }
 
-int readNodes(Node ***nodes, Header *h, FILE *inFile) 
+void readNodes(Node ***nodes, Header *h, FILE *inFile) 
 {
 	printf("ROOM: %d %d %d\n", h->x, h->y, h->z);
 
@@ -64,26 +84,35 @@ int readNodes(Node ***nodes, Header *h, FILE *inFile)
 		for (y = 0; y < h->y; y++)
 			for (z = 0; z < h->z; z++)
 			{
-				printf("%d %d %d\n", x, y, z);
 				fread(&c, sizeof(char), 1, inFile);
 				// Copy the clear node to nodes
 				nodes[x][y][z] = n;
 				// set node type
 				nodes[x][y][z].type = c;
 			}
-
-	for (x = 0; x < h->x; x++)
-		for (y = 0; y < h->y; y++)
-			for (z = 0; z < h->z; z++)
-				printf("%d, ", nodes[x][y][z].type);
-	printf("\n");
-
-	return 0; // should return 1 if sources are found
 }
 
-void readSample() {}
+void readSamples(const Node** n, float** buf, const int receiverCount, const int iteration) 
+{
+	for (int i = 0; i < receiverCount; i++)
+	{
+		buf[i][iteration] = n[i]->p;
+	}
+}
 
-void injectSample() {}
+void injectSamples(Node** n, const int sourceCount)
+{
+	const float f = 100000000.0f / 2;
+	for (int i = 0; i < sourceCount; i++)
+	{
+		n[i]->pUpI = f;
+		n[i]->pDownI = f;
+		n[i]->pRightI = f;
+		n[i]->pLeftI = f;
+		n[i]->pFrontI = f;
+		n[i]->pBackI = f;
+	}
+}
 
 void scatterPass(const Header *h, Node ***ns) 
 {
@@ -106,9 +135,7 @@ void scatterPass(const Header *h, Node ***ns)
 			{
 				n = &(ns[x][y][z]);
 
-				if (n->type == AIR_NODE || 
-					n->type == SRC_NODE || 
-					n->type == RCVR_NODE)
+				if (n->type == AIR_NODE || n->type == RCVR_NODE || n->type == SRC_NODE)
 				{
 					n->p = (n->pUpI + n->pDownI + n->pRightI + n->pLeftI + n->pFrontI + n->pBackI) / 3;
 					
@@ -118,7 +145,8 @@ void scatterPass(const Header *h, Node ***ns)
 					n->pLeftO = n->p - n->pLeftI;
 					n->pFrontO = n->p - n->pFrontI;
 					n->pBackO = n->p - n->pBackI;
-				} else 
+				} 
+				else 
 				{
 					k = getNodeReflectionCoefficient(n);
 					
@@ -162,7 +190,7 @@ void delayPass(const Header* h, Node*** ns)
 				{
 					ns[x - 1][y][z].pBackI = n->pBackO;
 				}
-				if (x < h->x) // front
+				if (x < h->x-1) // front
 				{
 					ns[x + 1][y][z].pFrontI = n->pFrontO;
 				}
@@ -171,7 +199,7 @@ void delayPass(const Header* h, Node*** ns)
 				{
 					ns[x][y - 1][z].pLeftI = n->pLeftO;
 				}
-				if (y < h->y) // right
+				if (y < h->y-1) // right
 				{
 					ns[x][y + 1][z].pRightI = n->pRightO;
 				}
@@ -180,7 +208,7 @@ void delayPass(const Header* h, Node*** ns)
 				{
 					ns[x][y][z - 1].pDownI = n->pDownO;
 				}
-				if (z < h->z) // up
+				if (z < h->z-1) // up
 				{
 					ns[x][y][z + 1].pUpI = n->pUpO;
 				}
@@ -228,6 +256,5 @@ int fixInt(int i)
 			((int) i & 0x0000ff00) << 8u |
 			((int) i & 0x00ff0000) >> 8u |
 			((int) i & 0xff000000) >> 24u;
-	
 #endif
 }

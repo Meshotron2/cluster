@@ -1,4 +1,6 @@
-#include "types.h"
+#pragma once
+
+#include"types.h"
 #include<stdlib.h>
 #include<stdio.h>
 
@@ -45,13 +47,19 @@ typedef struct Node {
 #define RHO_099 '9'
 #define RHO_1 'Z'
 
-// Allocates a node 3D array with dimensions specified in the Header
+// Allocates a node 3D array of Nodes ( not Node* ) with dimensions specified in the Header
 // This function allocates memory that must be released by calling free_nodes()
 Node*** allocNodes(const Header* header);
 void freeNodes(const Header* header, Node*** nodes);
 // Returns the reflection coefficient for a given node based on its type
 float getNodeReflectionCoefficient(const Node* n);
-// Makes buf point to a Point array containing the positions of all nodes of type 
+// Makes buf point to a Node* array of type 
 // Returns the number of nodes of type found.
-// This function allocates memory that must be released
-int getAllNodesOfType(Node*** buf, const Header* header, const Node*** nodes, const char type);
+// This function allocates memory that must be released by calling freeAllNodesOfType()
+int getAllNodesOfType(Node*** buf, const Header* header, Node*** nodes, const char type);
+// Returns an array of float arrays each holding iterationCount floats.
+// This function allocates memory that must be released by calling freeReceiversMemory()
+float** allocReceiversMemory(const int receiverCount, const int iterationCount);
+
+void freeAllNodesOfType(Node*** buf);
+void freeReceiversMemory(float*** buf, const int receiverCount);

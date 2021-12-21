@@ -45,6 +45,19 @@ Node*** alloc_nodes(const Header* header)
 		}
 	}
 
+	Node n = { STD_NODE };
+
+	for (int i = 0; i < header->x; i++)
+	{
+		for (int j = 0; j < header->y; j++)
+		{
+			for (int k = 0; k < header->z; k++)
+			{
+				nodes[i][j][k] = n;
+			}
+		}
+	}
+
 	return nodes;
 }
 
