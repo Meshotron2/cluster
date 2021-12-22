@@ -2,7 +2,7 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc != 3)
+	if (argc < 4)
 	{
 		fprintf(stderr, "Missing argument <file> <runtime>\n");
 		return EXIT_FAILURE;
@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 	FILE *inFile = fopen(argv[1], "rb");
 	if (!inFile) 
 	{
-		perror("fopen");
+		perror("Error");
 		return EXIT_FAILURE;
 	}
 
@@ -41,6 +41,14 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
+	if (argc - 3 != sourceCnt)
+	{
+		fprintf(stderr, "Not enough source files");
+		exit(EXIT_FAILURE);
+	}
+
+	float** sourceData = readSourceFiles(&argv[3], sourceCnt, iterationCnt);
+
 	Node** receivers;
 	int receiverCnt = getAllNodesOfType(&receivers, &h, nodes, RCVR_NODE);
 
@@ -52,9 +60,11 @@ int main(int argc, char *argv[])
 
 	float** receiversData = allocReceiversMemory(receiverCnt, iterationCnt);
 
-	injectSamples(sources, sourceCnt);
-	for (int i = 0; i < iterationCnt; i++) // ! lastIteration
+	// DWM algorithm loop
+	for (int i = 0; i < iterationCnt; i++)
 	{
+		injectSamples(sources, sourceData, sourceCnt, i);
+		
 		scatterPass(&h, nodes);
 
 		readSamples(receivers, receiversData, receiverCnt, i);
@@ -101,11 +111,12 @@ void readSamples(const Node** n, float** buf, const int receiverCount, const int
 	}
 }
 
-void injectSamples(Node** n, const int sourceCount)
+void injectSamples(Node** n, float** sourceData, const int sourceCount, const int iteration)
 {
-	const float f = 100000000.0f / 2;
+	float f;
 	for (int i = 0; i < sourceCount; i++)
 	{
+		f = sourceData[i][iteration] / 2;
 		n[i]->pUpI = f;
 		n[i]->pDownI = f;
 		n[i]->pRightI = f;
@@ -240,10 +251,61 @@ void writeExcitation(float** buf, const int receiverCount, const int iterationCn
 		snprintf(filename, size, "receiver_%d.pcm", i);
 
 		// open file, write and close
-		file = fopen(filename, "w");
+		file = fopen(filename, "wb");
+		if (!file)
+		{
+			perror("Error");
+			return EXIT_FAILURE;
+		}
 		fwrite(buf[i], sizeof(float), iterationCnt, file);
 		fclose(file);
 	}
+}
+
+float** readSourceFiles(char** argv, const int sourceFileCnt, const int iterationCnt)
+{
+	if (sourceFileCnt <= 0 || iterationCnt <= 0) exit(EXIT_FAILURE);
+	
+	FILE* f;
+
+	float** sourceData = malloc(sizeof(float*) * sourceFileCnt);
+	if (sourceData == NULL)
+	{
+		fprintf(stderr, "Out of memory");
+		exit(EXIT_FAILURE);
+	}
+
+	for (int i = 0; i < sourceFileCnt; i++)
+	{
+		f = fopen(argv[i], "rb");
+		if (!f)
+		{
+			perror("Error");
+			exit(EXIT_FAILURE);
+		}
+		
+		fseek(f, 0, SEEK_END);
+		long size = ftell(f);
+		fseek(f, 0, SEEK_SET);
+
+		if ((size / sizeof(float)) < iterationCnt)
+		{
+			fprintf(stderr, "Source file %s is not long enough!", argv[i]);
+			exit(EXIT_FAILURE);
+		}
+
+		sourceData[i] = malloc(sizeof(float) * iterationCnt);
+		if (sourceData[i] == NULL)
+		{
+			fprintf(stderr, "Out of memory");
+			exit(EXIT_FAILURE);
+		}
+
+		fread(sourceData[i], sizeof(float), iterationCnt, f);
+		fclose(f);
+	}
+
+	return sourceData;
 }
 
 void fixHeaderEndian(Header *h)

@@ -8,7 +8,7 @@
 #include"node.h"
 void readNodes(Node ***node, Header *h, FILE *inFile); 
 
-void injectSamples(Node** n, const int sourceCount);
+void injectSamples(Node** n, float** sourceData, const int sourceCount, const int iteration);
 
 void readSamples(const Node** n, float** buf, const int receiverCount, const int iteration);
 
@@ -19,3 +19,5 @@ void delayPass(const Header* h, Node*** ns);
 void writeExcitation(float** buf, const int receiverCount, const int iterationCnt);
 	
 void fixHeaderEndian(Header*);
+
+float** readSourceFiles(char** argv, const int sourceFileCnt, const int iterationCnt);
