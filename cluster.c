@@ -117,12 +117,12 @@ void injectSamples(Node** n, float** sourceData, const int sourceCount, const in
 	for (int i = 0; i < sourceCount; i++)
 	{
 		f = sourceData[i][iteration] / 2;
-		n[i]->pUpI = f;
-		n[i]->pDownI = f;
-		n[i]->pRightI = f;
-		n[i]->pLeftI = f;
-		n[i]->pFrontI = f;
-		n[i]->pBackI = f;
+		n[i]->pUpI += f;
+		n[i]->pDownI += f;
+		n[i]->pRightI += f;
+		n[i]->pLeftI += f;
+		n[i]->pFrontI += f;
+		n[i]->pBackI += f;
 	}
 }
 
@@ -288,20 +288,22 @@ float** readSourceFiles(char** argv, const int sourceFileCnt, const int iteratio
 		long size = ftell(f);
 		fseek(f, 0, SEEK_SET);
 
-		if ((size / sizeof(float)) < iterationCnt)
-		{
-			fprintf(stderr, "Source file %s is not long enough!", argv[i]);
-			exit(EXIT_FAILURE);
-		}
-
-		sourceData[i] = malloc(sizeof(float) * iterationCnt);
+		sourceData[i] = calloc(sizeof(float), iterationCnt);
 		if (sourceData[i] == NULL)
 		{
 			fprintf(stderr, "Out of memory");
 			exit(EXIT_FAILURE);
 		}
 
-		fread(sourceData[i], sizeof(float), iterationCnt, f);
+		if ((size / sizeof(float)) < iterationCnt)
+		{
+			fread(sourceData[i], sizeof(float), (size / sizeof(float)), f);
+		}
+		else
+		{
+			fread(sourceData[i], sizeof(float), iterationCnt, f);
+		}
+
 		fclose(f);
 	}
 
